@@ -1,4 +1,4 @@
-# soturonlinter README
+# soturon-linter README
 
 ## Features
 
@@ -14,9 +14,17 @@
 
 ## Known Issues
 
+## Contributing
 
+解決したい問題は以下です。contributionお待ちしております。
+
+- 数式内部の「,」は無視して、本文では警告を出す。
 
 ## Release Notes
+
+### 0.0.2
+
+設定を追加。
 
 ### 0.0.1
 
