@@ -2,6 +2,9 @@
 	"name": "soturonlinter",
 	"displayName": "Soturon Linter",
 	"description": "日本語の卒論・修論の作成支援拡張機能",
+	"repository": {
+		"url": "https://github.com/Take-Me1010/SoturonLinter"
+	},
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.64.0"
