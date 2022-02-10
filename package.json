@@ -5,6 +5,7 @@
 	"repository": {
 		"url": "https://github.com/Take-Me1010/SoturonLinter"
 	},
+	"license": "MIT",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.64.0"
