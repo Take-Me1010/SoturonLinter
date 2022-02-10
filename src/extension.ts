@@ -2,22 +2,25 @@ import * as vscode from 'vscode';
 import * as providers from './providers';
 
 export function activate(context: vscode.ExtensionContext) {
-	// Activateするだけのコマンド
-	context.subscriptions.push(
-		vscode.commands.registerCommand("soturonlinter.activate", () => {
+	/* 拡張機能の名前 */
+	const extensionName = "soturon-linter";
 
-		})
-	);
+	const config = vscode.workspace.getConfiguration(extensionName);
+	
+	const defaultTargetLanguages = ["latex"];
+	const targetLanguages: string[] = config.get("validLanguages") || defaultTargetLanguages;
 
-	//TODO: 設定に組み込む
-	const mapping = {
+	const defaultMapping = {
 		"、": "，",
 		"。": "．"
 	};
+	const mapping: providers.DelimiterMappingDictionary = config.get("deprecatedDelimitersMap") || defaultMapping;
 
 	const delimiterProvider = new providers.DelimiterProvider(mapping);
+
+
 	context.subscriptions.push(
-		vscode.languages.registerCodeActionsProvider('*', delimiterProvider, {
+		vscode.languages.registerCodeActionsProvider(targetLanguages, delimiterProvider, {
 			providedCodeActionKinds: providers.DelimiterProvider.providedCodeActionKinds
 		}));
 
@@ -26,9 +29,10 @@ export function activate(context: vscode.ExtensionContext) {
 
 
 	function refreshDiagnostics(doc: vscode.TextDocument, soturonDiagnostics: vscode.DiagnosticCollection): void {
-		const diagnostics: vscode.Diagnostic[] = delimiterProvider.diagnosticsCreator.createDiagnostic(doc);
-
-		soturonDiagnostics.set(doc.uri, diagnostics);
+		if (targetLanguages.includes(doc.languageId)){
+			const diagnostics: vscode.Diagnostic[] = delimiterProvider.diagnosticsCreator.createDiagnostic(doc);
+			soturonDiagnostics.set(doc.uri, diagnostics);
+		}
 	}
 
 	context.subscriptions.push(
@@ -45,5 +49,16 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(
 		vscode.workspace.onDidCloseTextDocument(doc => soturonDiagnostics.delete(doc.uri))
+	);
+
+	
+	// Activateコマンド
+	context.subscriptions.push(
+		vscode.commands.registerCommand(`${extensionName}.activate`, () => {
+			const editor = vscode.window.activeTextEditor;
+			if(editor) {
+				refreshDiagnostics(editor.document, soturonDiagnostics);
+			}
+		})
 	);
 }

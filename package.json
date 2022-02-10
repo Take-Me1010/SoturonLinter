@@ -1,5 +1,5 @@
 {
-	"name": "soturonlinter",
+	"name": "soturon-linter",
 	"displayName": "Soturon Linter",
 	"description": "日本語の卒論・修論の作成支援拡張機能",
 	"repository": {
@@ -14,16 +14,36 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:soturonlinter.activate"
+		"onCommand:soturon-linter.activate"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "soturonlinter.activate",
-				"title": "soturonlinter: activate"
+				"command": "soturon-linter.activate",
+				"title": "soturon-linter: activate"
 			}
-		]
+		],
+		"configuration": {
+			"title": "soturon-linter",
+			"properties": {
+				"soturon-linter.validLanguages": {
+					"type": "array",
+					"default": [
+						"latex"
+					],
+					"description": "警告を有効にする言語を指定します。"
+				},
+				"soturon-linter.deprecatedDelimitersMap": {
+					"type": "object",
+					"default": {
+						"、": "，",
+						"。": "．"
+					},
+					"description": "非推奨な区切り文字とその修正先の設定です．"
+				}
+			}
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",

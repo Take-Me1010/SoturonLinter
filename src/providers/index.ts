@@ -1,4 +1,4 @@
 
-export { DelimiterProvider } from './delimiterProvider';
+export { DelimiterProvider, DelimiterMappingDictionary } from './delimiterProvider';
 
 

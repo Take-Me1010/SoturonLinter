@@ -2,7 +2,7 @@
 import * as vscode from 'vscode';
 import { IDiagnosticsCreator, ICodeActionProvider } from './iprovider';
 
-interface DelimiterMappingDictionary {
+export interface DelimiterMappingDictionary {
     [deprecatedDelimiter: string]: string
 }
 
